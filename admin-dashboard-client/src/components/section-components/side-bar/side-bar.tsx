@@ -23,6 +23,7 @@ import FlexBetween from "../flex-between/flex-between";
 import profileImage from "assets/profile.jpeg";
 import { navItems } from "./constants";
 import { User } from "../../../types";
+import CustomList from "../list/list";
 interface SideBarProps {
   isNonMobile?: boolean;
   drawerWidth?: string;
@@ -40,6 +41,7 @@ const SideBar: FC<SideBarProps> = ({
 }) => {
   const { pathname } = useLocation();
   const [active, setActive] = useState("");
+  const [isMouseOnIdeBar, setMouseOnSideBar] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -70,6 +72,20 @@ const SideBar: FC<SideBarProps> = ({
     m: "2.25rem 0 1rem 3rem",
   };
 
+  const sideBarStyleWithoutScroll = {
+    maxHeight: "calc(100% - 179px)",
+    "& ::-webkit-scrollbar": {
+      display: "none",
+    },
+  };
+
+  const sideBarStyleWithScroll = {
+    maxHeight: "calc(100% - 179px)",
+    "& ::-webkit-scrollbar": {
+      width: "4px",
+    },
+  };
+
   // @ts-ignore
   const textStyle = { color: theme.palette.secondary[200] };
   // @ts-ignore
@@ -90,79 +106,53 @@ const SideBar: FC<SideBarProps> = ({
           anchor="left"
           sx={drawerStyle}
         >
-          <Box width="100%">
-            <Box m="1.5rem 2rem 2rem 3rem">
-              <FlexBetween color={theme.palette.secondary.main}>
-                <Box display="flex" alignItems="center" gap="0.5rem">
-                  <Typography variant="h4" fontWeight="bold">
-                    ECOMVISION
-                  </Typography>
-                </Box>
-                {!isNonMobile && (
-                  <IconButton
-                    onClick={setIsSideBarOpen?.bind(this, !isSideBarOpen)}
-                  >
-                    <ChevronLeft />
-                  </IconButton>
-                )}
-              </FlexBetween>
-            </Box>
-            <List>
-              {navItems.map(({ text, icon }) => {
-                if (!icon) {
-                  return (
-                    <Typography key={text} sx={typographyStyle}>
-                      {text}
-                    </Typography>
-                  );
-                }
-
-                const lcText = text.toLowerCase();
-
-                return (
-                  <ListItem key={text} disablePadding>
-                    <ListItemButton
-                      onClick={handleNavigate?.bind(this, lcText)}
-                      sx={{
-                        backgroundColor:
-                          active === lcText
-                            ? // @ts-ignore
-                              theme.palette.secondary[300]
-                            : "transparent",
-                        color:
-                          active === lcText
-                            ? // @ts-ignore
-                              theme.palette.primary[600]
-                            : // @ts-ignore
-                              theme.palette.secondary[100],
-                      }}
-                    >
-                      <ListItemIcon
-                        sx={{
-                          ml: "2rem",
-                          color:
-                            active === lcText
-                              ? // @ts-ignore
-                                theme.palette.primary[600]
-                              : // @ts-ignore
-                                theme.palette.secondary[200],
-                        }}
-                      >
-                        {icon}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                      {active === lcText && (
-                        <ChevronRightOutlined sx={{ ml: "auto" }} />
-                      )}
-                    </ListItemButton>
-                  </ListItem>
-                );
-              })}
-            </List>
+          <Box width="100%" p="1.5rem 2rem 2rem 3rem">
+            <FlexBetween color={theme.palette.secondary.main}>
+              <Box display="flex" alignItems="center" gap="0.5rem">
+                <Typography variant="h4" fontWeight="bold">
+                  ECOMVISION
+                </Typography>
+              </Box>
+              {!isNonMobile && (
+                <IconButton
+                  onClick={setIsSideBarOpen?.bind(this, !isSideBarOpen)}
+                >
+                  <ChevronLeft />
+                </IconButton>
+              )}
+            </FlexBetween>
           </Box>
-          <Box position="absolute" bottom="2rem">
+          <Box
+            width="100%"
+            sx={
+              isMouseOnIdeBar
+                ? sideBarStyleWithScroll
+                : sideBarStyleWithoutScroll
+            }
+            onMouseEnter={setMouseOnSideBar.bind(this, true)}
+            onMouseLeave={setMouseOnSideBar.bind(this, false)}
+          >
+            <CustomList
+              items={navItems}
+              activeItem={active}
+              handleNavigate={handleNavigate}
+              listStyle={{
+                width: "100%",
+                position: "relative",
+                overflow: "auto",
+                maxHeight: "100%",
+                paddingBottom: "50px !important",
+              }}
+              typographyStyle={typographyStyle}
+            />
+          </Box>
+          <Box width="100%">
             <Divider />
-            <FlexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
+            <FlexBetween
+              textTransform="none"
+              gap="0.5rem"
+              p="1.5rem 2rem 2rem 2.5rem"
+            >
               <Box
                 component="img"
                 alt="profile"

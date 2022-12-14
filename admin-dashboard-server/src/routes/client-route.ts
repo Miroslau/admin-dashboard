@@ -6,5 +6,6 @@ const router = express.Router();
 const clientController = new ClientController();
 
 router.get("/products", clientController.getProducts);
+router.get("/customers", clientController.getCustomers);
 
 export default router;

@@ -13,7 +13,7 @@ import {
   TrendingUpOutlined,
 } from "@mui/icons-material";
 
-type Navigaion = {
+export type Navigaion = {
   text: string;
   icon: React.FC | any;
 };

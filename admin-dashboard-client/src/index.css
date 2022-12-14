@@ -8,3 +8,17 @@ body,
     width: 100%;
     font-family: "Inter", sans-serif;
 }
+
+#root-portal {
+    position: relative;
+    z-index: 10000;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #21295c;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(90deg, rgba(49,41,189,1) 10%, rgba(170,35,190,1) 48%);
+    border-radius: 4px;
+}

@@ -5,7 +5,7 @@ interface IProduct {
   price?: number;
   description?: string;
   category?: string;
-  rating?: string;
+  rating?: number;
   supply?: number;
 }
 
