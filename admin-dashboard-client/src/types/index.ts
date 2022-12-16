@@ -18,6 +18,24 @@ export type User = {
   role: string;
 };
 
+export type Transaction = {
+  userId?: string;
+  cost?: string;
+  products?: string[];
+};
+
+export type TransactionResponse = {
+  total: number;
+  transactions: Transaction[];
+};
+
+export interface Column {
+  field: string;
+  headerName: string;
+  flex: number;
+  renderCell?: (params: any) => void;
+}
+
 interface Sales {
   totalSales?: number;
   totalUnits?: number;

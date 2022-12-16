@@ -9,11 +9,17 @@ import mongoose from "mongoose";
 import User from "./models/user";
 import Product from "./models/product";
 import ProductStat from "./models/product-stat";
+import Transaction from "./models/transaction";
 
 import { errorHandlingMiddleware } from "./middleware/ErrorHandlingMiddleware";
 import router from "./routes";
 
-import { dataUser, dataProduct, dataProductStat } from "./data/index";
+import {
+  dataUser,
+  dataProduct,
+  dataProductStat,
+  dataTransaction,
+} from "./data/index";
 
 dotenv.config();
 
@@ -48,6 +54,8 @@ mongoose
   .then(() => {
     app.listen(PORT, () => {
       console.log(`The server is working on port: ${PORT}`);
+
+      // Transaction.insertMany(dataTransaction);
 
       // Product.insertMany(dataProduct);
       // ProductStat.insertMany(dataProductStat);

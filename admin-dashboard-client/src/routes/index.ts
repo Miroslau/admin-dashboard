@@ -1,8 +1,14 @@
 import { RouteType } from "../types";
-import { CUSTOMERS, DASHBOARD, PRODUCTS } from "../constants/routes";
+import {
+  CUSTOMERS,
+  DASHBOARD,
+  PRODUCTS,
+  TRANSACTIONS,
+} from "../constants/routes";
 import Dashboard from "../scenes/dashboard/dashboard";
 import Products from "../scenes/products/products";
 import Customers from "../scenes/customers";
+import Transactions from "../scenes/transactions";
 
 const routes: RouteType[] = [
   {
@@ -16,6 +22,10 @@ const routes: RouteType[] = [
   {
     path: CUSTOMERS,
     Component: Customers,
+  },
+  {
+    path: TRANSACTIONS,
+    Component: Transactions,
   },
 ];
 
